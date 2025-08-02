@@ -1,6 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
-import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import {
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Button,
+  FormFeedback,
+} from "reactstrap";
 
 // for clear the form after submitted it
 const initialFormData = {
@@ -19,7 +26,7 @@ const errorMessages = {
     "8 characters long 1 uppercase & 1 lowercase character and 1 number needed",
   terms: "Must accept the terms",
 };
-export default function Register() {
+export default function Login() {
   const [formData, setFormData] = useState(initialFormData);
   // for validation setters
   const [errors, setErrors] = useState({
@@ -117,7 +124,9 @@ export default function Register() {
             placeholder="Adinizi Yaziniz"
             type="text"
             onChange={handleChange}
+            invalid={errors.name}
           />
+          {errors.name && <FormFeedback>{errorMessages.name}</FormFeedback>}
         </FormGroup>
         <FormGroup>
           <Label for="surname">Soyad :</Label>
@@ -127,7 +136,11 @@ export default function Register() {
             placeholder="Soyadinizi Yaziniz"
             type="text"
             onChange={handleChange}
+            invalid={errors.surname}
           />
+          {errors.surname && (
+            <FormFeedback>{errorMessages.surname}</FormFeedback>
+          )}
         </FormGroup>
         <FormGroup>
           <Label for="email">Email :</Label>
@@ -137,7 +150,9 @@ export default function Register() {
             placeholder="Mail Adresinizi Yaziniz"
             type="email"
             onChange={handleChange}
+            invalid={errors.email}
           />
+          {errors.email && <FormFeedback>{errorMessages.email}</FormFeedback>}
         </FormGroup>
         <FormGroup>
           <Label for="password">Sifre :</Label>
@@ -147,14 +162,25 @@ export default function Register() {
             placeholder="Sifrenizi Yaziniz"
             type="password"
             onChange={handleChange}
+            invalid={errors.password}
           />
+          {errors.password && (
+            <FormFeedback>{errorMessages.password}</FormFeedback>
+          )}
         </FormGroup>
         <FormGroup check>
-          <Input id="exampleCheck" name="check" type="checkbox" />
-          <Label check for="exampleCheck">
+          <Input
+            id="terms"
+            name="terms"
+            type="checkbox"
+            onChange={handleChange}
+            invalid={errors.terms}
+          />
+          <Label check for="terms">
             “I agree to the terms and conditions as set out by the user
             agreement.”
           </Label>
+          {errors.terms && <FormFeedback>{errorMessages.terms}</FormFeedback>}
         </FormGroup>
         <Button disabled={!isValid}>Kayit Ol</Button>
         <FormGroup>
