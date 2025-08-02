@@ -8,6 +8,8 @@ import {
   Button,
   FormFeedback,
 } from "reactstrap";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import Success from "./Success";
 
 // for clear the form after submitted it
 const initialFormData = {
@@ -115,78 +117,82 @@ export default function Login() {
 
   return (
     <>
-      <Form>
-        <FormGroup>
-          <Label for="name">Ad :</Label>
-          <Input
-            id="name"
-            name="name"
-            placeholder="Adinizi Yaziniz"
-            type="text"
-            onChange={handleChange}
-            invalid={errors.name}
-          />
-          {errors.name && <FormFeedback>{errorMessages.name}</FormFeedback>}
-        </FormGroup>
-        <FormGroup>
-          <Label for="surname">Soyad :</Label>
-          <Input
-            id="surname"
-            name="surname"
-            placeholder="Soyadinizi Yaziniz"
-            type="text"
-            onChange={handleChange}
-            invalid={errors.surname}
-          />
-          {errors.surname && (
-            <FormFeedback>{errorMessages.surname}</FormFeedback>
-          )}
-        </FormGroup>
-        <FormGroup>
-          <Label for="email">Email :</Label>
-          <Input
-            id="email"
-            name="email"
-            placeholder="Mail Adresinizi Yaziniz"
-            type="email"
-            onChange={handleChange}
-            invalid={errors.email}
-          />
-          {errors.email && <FormFeedback>{errorMessages.email}</FormFeedback>}
-        </FormGroup>
-        <FormGroup>
-          <Label for="password">Sifre :</Label>
-          <Input
-            id="password"
-            name="password"
-            placeholder="Sifrenizi Yaziniz"
-            type="password"
-            onChange={handleChange}
-            invalid={errors.password}
-          />
-          {errors.password && (
-            <FormFeedback>{errorMessages.password}</FormFeedback>
-          )}
-        </FormGroup>
-        <FormGroup check>
-          <Input
-            id="terms"
-            name="terms"
-            type="checkbox"
-            onChange={handleChange}
-            invalid={errors.terms}
-          />
-          <Label check for="terms">
-            “I agree to the terms and conditions as set out by the user
-            agreement.”
-          </Label>
-          {errors.terms && <FormFeedback>{errorMessages.terms}</FormFeedback>}
-        </FormGroup>
-        <Button disabled={!isValid}>Kayit Ol</Button>
-        <FormGroup>
-          <Label>User ID :</Label>
-        </FormGroup>
-      </Form>
+      <Router>
+        <Form>
+          <FormGroup>
+            <Label for="name">Ad :</Label>
+            <Input
+              id="name"
+              name="name"
+              placeholder="Adinizi Yaziniz"
+              type="text"
+              onChange={handleChange}
+              invalid={errors.name}
+            />
+            {errors.name && <FormFeedback>{errorMessages.name}</FormFeedback>}
+          </FormGroup>
+          <FormGroup>
+            <Label for="surname">Soyad :</Label>
+            <Input
+              id="surname"
+              name="surname"
+              placeholder="Soyadinizi Yaziniz"
+              type="text"
+              onChange={handleChange}
+              invalid={errors.surname}
+            />
+            {errors.surname && (
+              <FormFeedback>{errorMessages.surname}</FormFeedback>
+            )}
+          </FormGroup>
+          <FormGroup>
+            <Label for="email">Email :</Label>
+            <Input
+              id="email"
+              name="email"
+              placeholder="Mail Adresinizi Yaziniz"
+              type="email"
+              onChange={handleChange}
+              invalid={errors.email}
+            />
+            {errors.email && <FormFeedback>{errorMessages.email}</FormFeedback>}
+          </FormGroup>
+          <FormGroup>
+            <Label for="password">Sifre :</Label>
+            <Input
+              id="password"
+              name="password"
+              placeholder="Sifrenizi Yaziniz"
+              type="password"
+              onChange={handleChange}
+              invalid={errors.password}
+            />
+            {errors.password && (
+              <FormFeedback>{errorMessages.password}</FormFeedback>
+            )}
+          </FormGroup>
+          <FormGroup check>
+            <Input
+              id="terms"
+              name="terms"
+              type="checkbox"
+              onChange={handleChange}
+              invalid={errors.terms}
+            />
+            <Label check for="terms">
+              “I agree to the terms and conditions as set out by the user
+              agreement.”
+            </Label>
+            {errors.terms && <FormFeedback>{errorMessages.terms}</FormFeedback>}
+          </FormGroup>
+          <Link to="/Success.jsx">
+            <Button disabled={!isValid}>Kayit Ol</Button>
+          </Link>
+        </Form>
+        <Routes>
+          <Route exact path="/Success.jsx" element={<Success />} />
+        </Routes>
+      </Router>
     </>
   );
 }
