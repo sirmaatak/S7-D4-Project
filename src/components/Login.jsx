@@ -8,8 +8,10 @@ import {
   Button,
   FormFeedback,
 } from "reactstrap";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import Success from "./Success";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+
+axios.defaults.headers.common["x-api-key"] = "reqres-free-v1";
 
 // for clear the form after submitted it
 const initialFormData = {
@@ -39,6 +41,10 @@ export default function Login() {
     terms: false,
   });
   const [isValid, setIsValid] = useState(false);
+
+  // for redirect Success page
+
+  let history = useHistory();
 
   //function for validate email
   const validateEmail = (email) => {
@@ -115,84 +121,99 @@ export default function Login() {
     }
   }
 
+  function handleSubmit(event) {
+    event.preventDefault();
+    if (!isValid) return;
+    // for post request
+    axios
+      .post("https://reqres.in/api/users", formData)
+      .then((response) => {
+        console.log(response);
+        //for clear the form with  used controlled inputs
+        setFormData(initialFormData);
+        history.push("/success");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   return (
     <>
-      <Router>
-        <Form>
-          <FormGroup>
-            <Label for="name">Ad :</Label>
-            <Input
-              id="name"
-              name="name"
-              placeholder="Adinizi Yaziniz"
-              type="text"
-              onChange={handleChange}
-              invalid={errors.name}
-            />
-            {errors.name && <FormFeedback>{errorMessages.name}</FormFeedback>}
-          </FormGroup>
-          <FormGroup>
-            <Label for="surname">Soyad :</Label>
-            <Input
-              id="surname"
-              name="surname"
-              placeholder="Soyadinizi Yaziniz"
-              type="text"
-              onChange={handleChange}
-              invalid={errors.surname}
-            />
-            {errors.surname && (
-              <FormFeedback>{errorMessages.surname}</FormFeedback>
-            )}
-          </FormGroup>
-          <FormGroup>
-            <Label for="email">Email :</Label>
-            <Input
-              id="email"
-              name="email"
-              placeholder="Mail Adresinizi Yaziniz"
-              type="email"
-              onChange={handleChange}
-              invalid={errors.email}
-            />
-            {errors.email && <FormFeedback>{errorMessages.email}</FormFeedback>}
-          </FormGroup>
-          <FormGroup>
-            <Label for="password">Sifre :</Label>
-            <Input
-              id="password"
-              name="password"
-              placeholder="Sifrenizi Yaziniz"
-              type="password"
-              onChange={handleChange}
-              invalid={errors.password}
-            />
-            {errors.password && (
-              <FormFeedback>{errorMessages.password}</FormFeedback>
-            )}
-          </FormGroup>
-          <FormGroup check>
-            <Input
-              id="terms"
-              name="terms"
-              type="checkbox"
-              onChange={handleChange}
-              invalid={errors.terms}
-            />
-            <Label check for="terms">
-              “I agree to the terms and conditions as set out by the user
-              agreement.”
-            </Label>
-            {errors.terms && <FormFeedback>{errorMessages.terms}</FormFeedback>}
-          </FormGroup>
-          <Link to="/Success.jsx">
-            <Button disabled={!isValid}>Kayit Ol</Button>
-          </Link>
-        </Form>
-        <Routes>
-          <Route exact path="/Success.jsx" element={<Success />} />
-        </Routes>
-      </Router>
+      <Form onSubmit={handleSubmit}>
+        <FormGroup>
+          <Label for="name">Ad :</Label>
+          <Input
+            id="name"
+            name="name"
+            placeholder="Adinizi Yaziniz"
+            type="text"
+            onChange={handleChange}
+            invalid={errors.name}
+            value={formData.name}
+          />
+          {errors.name && <FormFeedback>{errorMessages.name}</FormFeedback>}
+        </FormGroup>
+        <FormGroup>
+          <Label for="surname">Soyad :</Label>
+          <Input
+            id="surname"
+            name="surname"
+            placeholder="Soyadinizi Yaziniz"
+            type="text"
+            onChange={handleChange}
+            invalid={errors.surname}
+            value={formData.surname}
+          />
+          {errors.surname && (
+            <FormFeedback>{errorMessages.surname}</FormFeedback>
+          )}
+        </FormGroup>
+        <FormGroup>
+          <Label for="email">Email :</Label>
+          <Input
+            id="email"
+            name="email"
+            placeholder="Mail Adresinizi Yaziniz"
+            type="email"
+            onChange={handleChange}
+            invalid={errors.email}
+            value={formData.email}
+          />
+          {errors.email && <FormFeedback>{errorMessages.email}</FormFeedback>}
+        </FormGroup>
+        <FormGroup>
+          <Label for="password">Sifre :</Label>
+          <Input
+            id="password"
+            name="password"
+            placeholder="Sifrenizi Yaziniz"
+            type="password"
+            onChange={handleChange}
+            invalid={errors.password}
+            value={formData.password}
+          />
+          {errors.password && (
+            <FormFeedback>{errorMessages.password}</FormFeedback>
+          )}
+        </FormGroup>
+        <FormGroup check>
+          <Input
+            id="terms"
+            name="terms"
+            type="checkbox"
+            onChange={handleChange}
+            invalid={errors.terms}
+            value={formData.terms}
+          />
+          <Label check for="terms">
+            “I agree to the terms and conditions as set out by the user
+            agreement.”
+          </Label>
+          {errors.terms && <FormFeedback>{errorMessages.terms}</FormFeedback>}
+        </FormGroup>
+
+        <Button disabled={!isValid}>Kayit Ol</Button>
+      </Form>
     </>
   );
 }

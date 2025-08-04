@@ -1,11 +1,20 @@
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import Login from "./components/Login";
-//import { BrowserRouter } from "react-router-dom";
-
+import Success from "./components/Success";
 function App() {
   return (
     <>
-      <Login />
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/">
+            <Login />
+          </Route>
+          <Route>
+            <Success path="/success" />
+          </Route>
+        </Switch>
+      </BrowserRouter>
     </>
   );
 }
