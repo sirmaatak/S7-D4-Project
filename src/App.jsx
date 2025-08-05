@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import Login from "./components/Login";
 import Success from "./components/Success";
+import Trial from "./components/Trial";
+
 function App() {
   return (
     <>
@@ -10,8 +12,11 @@ function App() {
           <Route exact path="/">
             <Login />
           </Route>
-          <Route>
-            <Success path="/success" />
+          <Route path="/success">
+            <Success />
+          </Route>
+          <Route path="/trial">
+            <Trial />
           </Route>
         </Switch>
       </BrowserRouter>

@@ -150,8 +150,13 @@ export default function Login() {
             onChange={handleChange}
             invalid={errors.name}
             value={formData.name}
+            data-cy="name-input"
           />
-          {errors.name && <FormFeedback>{errorMessages.name}</FormFeedback>}
+          {errors.name && (
+            <FormFeedback data-cy="error-message">
+              {errorMessages.name}
+            </FormFeedback>
+          )}
         </FormGroup>
         <FormGroup>
           <Label for="surname">Soyad :</Label>
@@ -163,9 +168,12 @@ export default function Login() {
             onChange={handleChange}
             invalid={errors.surname}
             value={formData.surname}
+            data-cy="surname-input"
           />
           {errors.surname && (
-            <FormFeedback>{errorMessages.surname}</FormFeedback>
+            <FormFeedback data-cy="error-message">
+              {errorMessages.surname}
+            </FormFeedback>
           )}
         </FormGroup>
         <FormGroup>
@@ -178,8 +186,13 @@ export default function Login() {
             onChange={handleChange}
             invalid={errors.email}
             value={formData.email}
+            data-cy="email-input"
           />
-          {errors.email && <FormFeedback>{errorMessages.email}</FormFeedback>}
+          {errors.email && (
+            <FormFeedback data-cy="error-message">
+              {errorMessages.email}
+            </FormFeedback>
+          )}
         </FormGroup>
         <FormGroup>
           <Label for="password">Sifre :</Label>
@@ -191,9 +204,12 @@ export default function Login() {
             onChange={handleChange}
             invalid={errors.password}
             value={formData.password}
+            data-cy="password-input"
           />
           {errors.password && (
-            <FormFeedback>{errorMessages.password}</FormFeedback>
+            <FormFeedback data-cy="error-message">
+              {errorMessages.password}
+            </FormFeedback>
           )}
         </FormGroup>
         <FormGroup check>
@@ -204,15 +220,22 @@ export default function Login() {
             onChange={handleChange}
             invalid={errors.terms}
             value={formData.terms}
+            data-cy="checkbox-input"
           />
           <Label check for="terms">
             “I agree to the terms and conditions as set out by the user
             agreement.”
           </Label>
-          {errors.terms && <FormFeedback>{errorMessages.terms}</FormFeedback>}
+          {errors.terms && (
+            <FormFeedback data-cy="error-message">
+              {errorMessages.terms}
+            </FormFeedback>
+          )}
         </FormGroup>
 
-        <Button disabled={!isValid}>Kayit Ol</Button>
+        <Button disabled={!isValid} data-cy="register-button">
+          Kayit Ol
+        </Button>
       </Form>
     </>
   );
